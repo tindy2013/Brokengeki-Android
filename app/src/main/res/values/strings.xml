@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Brokengeki</string>
+    <string name="title">Brokengeki-Evolved</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="coin">coin</string>
+    <string name="card">card</string>
+    <string name="expand"> Control ↓ </string>
+    <string name="collapse"> Control ↑ </string>
+    <string name="test">Test</string>
+    <string name="service">Service</string>
+    <string name="use_gyro_lever">Gyro Lever</string>
+    <string name="current_latency">Current Latency: %f ms</string>
+    <string name="press_again_to_exit">Press again to exit</string>
+    <string name="show_delay">Show Delay</string>
+    <string name="address">Address</string>
+    <string name="enable_vibration">Enable Vibration</string>
+
+    <string name="tcp">TCP</string>
+    <string name="udp">UDP</string>
+    <string name="full_button">" Full Button "</string>
+    <string name="center_button">Center Button</string>
+
+</resources>
