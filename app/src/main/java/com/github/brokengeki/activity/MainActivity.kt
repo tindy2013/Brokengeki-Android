@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var app: BrokengekiApplication
     private val serverPort = 53468
 
+    // X Offset for screen cutout
+    private var xOffsetObtained = false
+    private var xOffset = 0
+
     // TCP
     private var mTCPMode = false
     private var mTCPSocket: Socket? = null
@@ -304,6 +308,16 @@ class MainActivity : AppCompatActivity() {
             val hasButtons = mutableSetOf<Int>()
             val touchedButtons = mutableSetOf<Int>()
             val allChildRect = mutableMapOf<Int, Rect>()
+
+            var coords = IntArray(2)
+            if (!xOffsetObtained) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    view.getLocationOnScreen(coords)
+                    xOffset = coords[0]
+                }
+                xOffsetObtained = true
+            }
+
             getRect(view, allChildRect)
             for (child in allChildRect) {
                 if (!buttonMapping.containsKey(child.key))
@@ -315,9 +329,10 @@ class MainActivity : AppCompatActivity() {
                 val widthSpan = (rect.left.toFloat() - if (leftTolerateIds.contains(child.key)) widthTolerance else 0f)..(rect.right.toFloat() + if (rightTolerateIds.contains(child.key)) widthTolerance else 0f)
                 val heightSpan = (rect.top.toFloat() - if (topTolerateIds.contains(child.key)) heightTolerance else 0f)..(rect.bottom.toFloat() + if (bottomTolerateIds.contains(child.key)) heightTolerance else 0f)
                 for (point in 0 until event.pointerCount) {
-                    val x = event.getX(point) + view.left
+                    val x = event.getX(point) + view.left + xOffset
                     val y = event.getY(point) + view.top
                     if (x in widthSpan && y in heightSpan && point != ignoredIndex) {
+                        // Log.d("030-accepted", "x: " + x + ", start: " + widthSpan.start + ", end: " + widthSpan.endInclusive)
                         touchedButtons.add(child.key)
                     }
                 }
